@@ -1,4 +1,4 @@
-#!/bin/bash -x +e
+#!/bin/bash
 
 HOST=`uname -sm`
 TARGET_OS=$1
