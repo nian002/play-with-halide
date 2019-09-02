@@ -37,7 +37,7 @@ For Unix-like systems,
 # or add android to cross-compile Android
 ./script/build-halide.sh android
 ```
-this will build the **OpenCV** library and install into /usr/local/
+this will build the **Halide** library and install into /usr/local/
 
 For windows,
 ```bash

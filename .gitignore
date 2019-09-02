@@ -1,7 +1,5 @@
 # Intermediate files
-/build
-/install
-/bin
+/out
 
 .DS_Store
 /.DS_Store

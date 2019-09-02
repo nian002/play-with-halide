@@ -20,13 +20,15 @@ script:
     - export PATH=${DEPS_DIR}/ninja:${PATH}
 
     - LLVM_URL="http://releases.llvm.org/${LLVM_VERSION}/clang+llvm-${LLVM_VERSION}-x86_64-linux-gnu-ubuntu-16.04.tar.xz"
-    - echo "Downloading clang-llvm-${LLVM_VERSION} ..."
-    - mkdir -p ${DEPS_DIR}/llvm-clang
-    - travis_retry wget --no-check-certificate --quiet -O - ${LLVM_URL}
-    - ls -la
-    - xz -d clang+llvm-${LLVM_VERSION}-x86_64-linux-gnu-ubuntu-16.04.tar.xz
-    - tar --strip-components=1 -xvf -C ${DEPS_DIR}/llvm-clang clang+llvm-${LLVM_VERSION}-x86_64-linux-gnu-ubuntu-16.04.tar
-    - export PATH=${DEPS_DIR}/llvm-clang/bin:${PATH}
+    - echo "Downloading clang+llvm-${LLVM_VERSION} ..."
+    - mkdir -p ${DEPS_DIR}/llvm
+    - travis_retry wget --no-check-certificate --quiet -O ${DEPS_DIR}/llvm/clang+llvm-${LLVM_VERSION}.tar.xz ${LLVM_URL}
+    - pushd `pwd`
+    - cd ${DEPS_DIR}/llvm
+    - xz -d clang+llvm-${LLVM_VERSION}.tar.xz
+    - tar --strip-components=1 -xf clang+llvm-${LLVM_VERSION}.tar
+    - popd
+    - export PATH=${DEPS_DIR}/llvm/bin:${PATH}
 
     - CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-Linux-x86_64.tar.gz"
     - echo "Downloading CMake ..."
