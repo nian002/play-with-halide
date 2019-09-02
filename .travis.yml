@@ -27,15 +27,7 @@ script:
     - cmake --version
     - clang --version
     - ninja --version
-    - echo "Downloading Halide ..."
-    - mkdir -p ${DEPS_DIR}/Halide
-    - git clone https://github.com/halide/Halide.git ${DEPS_DIR}/Halide
-    - ls ${DEPS_DIR}
-    - pushd `pwd`
-    - cd ${DEPS_DIR}/Halide; mkdir build; cd build
-    - cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX=../distrib -DWITH_APPS=OFF -DWITH_TESTS=OFF -DWITH_TUTORIALS=OFF ..
-    - cmake --build . --config Release --target install -- -j8
-    - popd
-    - export HALIDE_DISTRIB_DIR=${DEPS_DIR}/Halide/distrib
+    - echo "Build Halide ..."
+    - scripts/build-halide.sh
     - echo "Start building..."
     - scripts/build.sh
