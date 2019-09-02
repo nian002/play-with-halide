@@ -46,7 +46,7 @@ fi
 CMAKE_CONFIG="-G "Ninja" \\
     -D CMAKE_INSTALL_PREFIX=${INSTALL_DIR} \\
     -D CMAKE_POSITION_INDEPENDENT_CODE=ON"
-    
+
 if [[ ${TARGET_OS} == "Android" ]]; then
     CMAKE_CONFIG="${CMAKE_CONFIG} \\
     -D CMAKE_TOOLCHAIN_FILE=${ANDROID_NDK}/build/cmake/android.toolchain.cmake \\
