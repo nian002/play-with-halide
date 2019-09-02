@@ -1,0 +1,41 @@
+dist: xenial
+sudo: required
+language:
+  - cpp
+compiler:
+  - clang
+env:
+    global:
+    - LLVM_VERSION=8.0.0
+    - CMAKE_VERSION=3.15.2
+    - DEPS_DIR=${TRAVIS_BUILD_DIR}/deps
+script:
+    - echo "DEPS_DIR=${DEPS_DIR}"
+    - echo "LLVM_DIR=${LLVM_DIR}"
+    - echo "Downloading Ninja ..."
+    - mkdir -p ${DEPS_DIR}/ninja
+    - NINJA_URL=https://github.com/ninja-build/ninja/releases/download/v1.9.0/ninja-linux.zip
+    - travis_retry wget --no-check-certificate --quiet -O ${DEPS_DIR}/ninja/ninja.zip ${NINJA_URL}
+    - unzip ${DEPS_DIR}/ninja/ninja.zip -d ${DEPS_DIR}/ninja
+    - export PATH=${DEPS_DIR}/ninja:${PATH}
+    - LLVM_URL="http://releases.llvm.org/${LLVM_VERSION}/clang+llvm-${LLVM_VERSION}-x86_64-linux-gnu-ubuntu-16.04.tar.xz"
+    - CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-Linux-x86_64.tar.gz"
+    - echo "Downloading CMake ..."
+    - mkdir -p ${DEPS_DIR}/cmake
+    - travis_retry wget --no-check-certificate --quiet -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C ${DEPS_DIR}/cmake
+    - export PATH=${DEPS_DIR}/cmake/bin:${PATH}
+    - cmake --version
+    - clang --version
+    - ninja --version
+    - echo "Downloading Halide ..."
+    - mkdir -p ${DEPS_DIR}/Halide
+    - git clone https://github.com/halide/Halide.git ${DEPS_DIR}/Halide
+    - ls ${DEPS_DIR}
+    - pushd `pwd`
+    - cd ${DEPS_DIR}/Halide; mkdir build; cd build
+    - cmake -G "Ninja" -DCMAKE_INSTALL_PREFIX=../distrib -DWITH_APPS=OFF -DWITH_TESTS=OFF -DWITH_TUTORIALS=OFF ..
+    - cmake --build . --config Release --target install -- -j8
+    - popd
+    - export HALIDE_DISTRIB_DIR=${DEPS_DIR}/Halide/distrib
+    - echo "Start building..."
+    - scripts/build.sh

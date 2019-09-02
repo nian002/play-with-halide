@@ -1,0 +1,3 @@
+[submodule "external/Halide"]
+	path = external/Halide
+	url = https://github.com/halide/Halide.git
