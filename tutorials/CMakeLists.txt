@@ -7,7 +7,7 @@ find_package(JPEG REQUIRED)
 
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -ldl)
+    set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} -pthread)
 endif()
 
 ##############################################
@@ -99,7 +99,7 @@ add_custom_target(lesson10_generate DEPENDS ${GENERATED_FILES})
 # set_target_properties(lesson10_halide PROPERTIES INTERFACE_IMPORTED_LOCATION ${CMAKE_CURRENT_BINARY_DIR}/lesson10_halide.a)
 add_library(lesson10_halide INTERFACE)
 target_include_directories(lesson10_halide INTERFACE ${CMAKE_CURRENT_BINARY_DIR})
-target_link_libraries(lesson10_halide INTERFACE ${CMAKE_CURRENT_BINARY_DIR}/lesson10_halide.a)
+target_link_libraries(lesson10_halide INTERFACE ${CMAKE_CURRENT_BINARY_DIR}/lesson10_halide.a ${CMAKE_DL_LIBS})
 
 add_executable(lesson10 src/lesson10.cpp)
 target_compile_definitions(lesson10 PRIVATE ${PNG_DEFINITIONS})
@@ -131,7 +131,7 @@ add_custom_command(
 add_custom_target(planar_generated DEPENDS ${PLANAR_GENERATED_FILES})
 add_library(brighten_planar INTERFACE)
 target_include_directories(brighten_planar INTERFACE ${CMAKE_CURRENT_BINARY_DIR})
-target_link_libraries(brighten_planar INTERFACE ${CMAKE_CURRENT_BINARY_DIR}/brighten_planar.a)
+target_link_libraries(brighten_planar INTERFACE ${CMAKE_CURRENT_BINARY_DIR}/brighten_planar.a ${CMAKE_DL_LIBS})
 
 set(INTERLEAVED_GENERATED_FILES brighten_interleaved.h brighten_interleaved.a)
 add_custom_command(
@@ -141,7 +141,7 @@ add_custom_command(
 add_custom_target(interleaved_generated DEPENDS ${INTERLEAVED_GENERATED_FILES})
 add_library(brighten_interleaved INTERFACE)
 target_include_directories(brighten_interleaved INTERFACE ${CMAKE_CURRENT_BINARY_DIR})
-target_link_libraries(brighten_interleaved INTERFACE ${CMAKE_CURRENT_BINARY_DIR}/brighten_interleaved.a)
+target_link_libraries(brighten_interleaved INTERFACE ${CMAKE_CURRENT_BINARY_DIR}/brighten_interleaved.a ${CMAKE_DL_LIBS})
 
 set(EITHER_GENERATED_FILES brighten_either.h brighten_either.a)
 add_custom_command(
@@ -151,7 +151,7 @@ add_custom_command(
 add_custom_target(either_generated DEPENDS ${EITHER_GENERATED_FILES})
 add_library(brighten_either INTERFACE)
 target_include_directories(brighten_either INTERFACE ${CMAKE_CURRENT_BINARY_DIR})
-target_link_libraries(brighten_either INTERFACE ${CMAKE_CURRENT_BINARY_DIR}/brighten_either.a)
+target_link_libraries(brighten_either INTERFACE ${CMAKE_CURRENT_BINARY_DIR}/brighten_either.a ${CMAKE_DL_LIBS})
 
 set(SPECIALIZED_GENERATED_FILES brighten_specialized.h brighten_specialized.a)
 add_custom_command(
@@ -161,7 +161,7 @@ add_custom_command(
 add_custom_target(specialized_generated DEPENDS ${SPECIALIZED_GENERATED_FILES})
 add_library(brighten_specialized INTERFACE)
 target_include_directories(brighten_specialized INTERFACE ${CMAKE_CURRENT_BINARY_DIR})
-target_link_libraries(brighten_specialized INTERFACE ${CMAKE_CURRENT_BINARY_DIR}/brighten_specialized.a)
+target_link_libraries(brighten_specialized INTERFACE ${CMAKE_CURRENT_BINARY_DIR}/brighten_specialized.a ${CMAKE_DL_LIBS})
 
 add_executable(lesson16 src/lesson16_image.cpp)
 target_link_libraries(lesson16
