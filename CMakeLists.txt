@@ -7,7 +7,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 
-option(BUILD_WITH_TUTORIALS "Build with tutorials" OFF)
+option(BUILD_WITH_TUTORIALS "Build with tutorials" ON)
 option(BUILD_WITH_EXAMPLES "Build with examples" ON)
 
 
