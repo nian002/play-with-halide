@@ -119,7 +119,7 @@ add_dependencies(lesson10 lesson10_generate)
 
 ##############################################
 # lesson16
-add_executable(lesson16_generate src/lesson16_generate.cpp ${Halide_EXTRA_INCLUDE_DIR}/GenGen.cpp)
+add_executable(lesson16_generate src/lesson16_generate.cpp ${Halide_TOOLS_DIR}/GenGen.cpp)
 target_link_libraries(lesson16_generate PRIVATE Halide::Halide)
 target_compile_options(lesson16_generate PRIVATE -fno-rtti)
 
